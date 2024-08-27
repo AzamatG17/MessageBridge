@@ -1,4 +1,5 @@
 ﻿using MessageBridge.Interfaces;
+using MessageBridge.Models;
 using MessageBridge.Models.Exceptions;
 using Newtonsoft.Json;
 using System.Text;
@@ -18,11 +19,11 @@ namespace MessageBridge.Services
             _logging = logging;
         }
 
-        public async Task<(string, bool)> SendSmsAfterBooking(string phoneNum, string message)
+        public async Task<(string, bool)> SendSmsAfterBooking(SendSmsDto sendSmsDto)
         {
             try
             {
-                bool result = IsValidPhoneNumber(phoneNum);
+                bool result = IsValidPhoneNumber(sendSmsDto.PhoneNum);
 
                 if (!result)
                 {
@@ -32,8 +33,8 @@ namespace MessageBridge.Services
                 var smsRequest = new
                 {
                     cause = "Elektron navbat",
-                    phone = phoneNum,
-                    msg = message
+                    phone = sendSmsDto.PhoneNum,
+                    msg = sendSmsDto.Message
                 };
 
                 var jsonContent = JsonConvert.SerializeObject(smsRequest);
