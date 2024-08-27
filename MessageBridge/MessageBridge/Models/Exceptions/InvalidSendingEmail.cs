@@ -1,8 +1,11 @@
-﻿namespace MessageBridge.Models.Exceptions
+﻿using Xeptions;
+
+namespace MessageBridge.Models.Exceptions
 {
-    public class InvalidSendingEmail : Exception
+    public class InvalidSendingEmail : Xeption
     {
-        public InvalidSendingEmail(Exception exception)
+        public InvalidSendingEmail(Xeption exception)
+            :base("Invalid sending email message", exception)
         { }
     }
 }
