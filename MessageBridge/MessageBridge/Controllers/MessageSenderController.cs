@@ -20,11 +20,11 @@ namespace MessageBridge.Controllers
         }
 
         [HttpPost("email")]
-        public async Task<ActionResult<MessageResult>> SendEmail(string email, string massage, string subject)
+        public async Task<ActionResult<MessageResult>> SendEmail(SendEmailDto sendEmailDto)
         {
             try
             {
-                bool result = await _emailSender.SendMessage(email, massage, subject);
+                bool result = await _emailSender.SendMessage(sendEmailDto);
 
                 if (result)
                 {
@@ -54,11 +54,11 @@ namespace MessageBridge.Controllers
         }
 
         [HttpPost("sms")]
-        public async Task<ActionResult<MessageResult>> SendSms(string phoneNum, string message)
+        public async Task<ActionResult<MessageResult>> SendSms(SendSmsDto sendSmsDto)
         {
             try
             {
-                var result = await _sendSmsClient.SendSmsAfterBooking(phoneNum, message);
+                var result = await _sendSmsClient.SendSmsAfterBooking(sendSmsDto);
 
                 if (result.Item2)
                 {
