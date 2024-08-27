@@ -3,6 +3,7 @@ using System.Net;
 using MessageBridge.Models.Exceptions;
 using Xeptions;
 using MessageBridge.Interfaces;
+using MessageBridge.Models;
 
 namespace MessageBridge.Services
 {
@@ -15,18 +16,18 @@ namespace MessageBridge.Services
             _loggingBroker = loggingBroker;
         }
 
-        public async Task<bool> SendMessage(string email, string massage, string subject)
+        public async Task<bool> SendMessage(SendEmailDto sendEmailDto)
         {
             using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
                 try
                 {
-                    MailAddress fromAddress = new MailAddress("barakatexnika.uz@gmail.com", subject);
-                    MailAddress toAddress = new MailAddress(email);
+                    MailAddress fromAddress = new MailAddress("barakatexnika.uz@gmail.com", sendEmailDto.Subject);
+                    MailAddress toAddress = new MailAddress(sendEmailDto.Email);
                     MailMessage mailMessage = new MailMessage(fromAddress, toAddress)
                     {
-                        Body = massage,
-                        Subject = subject
+                        Body = sendEmailDto.Massage,
+                        Subject = sendEmailDto.Subject
                     };
 
                     smtpClient.EnableSsl = true;

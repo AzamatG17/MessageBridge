@@ -1,7 +1,9 @@
-﻿namespace MessageBridge.Interfaces
+﻿using MessageBridge.Models;
+
+namespace MessageBridge.Interfaces
 {
     public interface IEmailSender
     {
-        Task<bool> SendMessage(string email, string massage, string subject);
+        Task<bool> SendMessage(SendEmailDto sendEmailDto);
     }
 }
