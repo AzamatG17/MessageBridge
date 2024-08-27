@@ -1,0 +1,6 @@
+@MessageBridge_HostAddress = http://localhost:5153
+
+GET {{MessageBridge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
