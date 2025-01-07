@@ -11,12 +11,13 @@ namespace MessageBridge.Services
     public class SendSmsClient : ISendSmsClient
     {
         private readonly HttpClient _httpClient;
-        private const string baseUrl = "http://10.10.12.230:1920/wi/SMSCentre/send_sms.php";
+        private readonly string _baseUrl;
         private readonly ILogging _logging;
-        public SendSmsClient(HttpClient httpClient, ILogging logging)
+        public SendSmsClient(HttpClient httpClient, ILogging logging, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _logging = logging;
+            _baseUrl = configuration["SmsService:BaseUrl"] ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public async Task<(string, bool)> SendSmsAfterBooking(SendSmsDto sendSmsDto)
@@ -40,7 +41,7 @@ namespace MessageBridge.Services
                 var jsonContent = JsonConvert.SerializeObject(smsRequest);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("http://10.10.12.230:1920/wi/SMSCentre/send_sms.php", content);
+                var response = await _httpClient.PostAsync(_baseUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {

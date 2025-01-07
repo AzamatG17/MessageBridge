@@ -16,7 +16,7 @@ namespace MessageBridge
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.ConfigureServices();
+            builder.Services.ConfigureServices(configuration);
 
             var app = builder.Build();
 
